@@ -4,6 +4,7 @@ import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
 import Home from './views/Home';
 import SignIn from './components/SignIn';
+import SignUp from './views/SignUp';
 import Protected from './Protected';
 
 interface OktaAuthType {
@@ -42,6 +43,7 @@ const AppWithRouterAccess = () => {
       <SecureRoute path='/protected' component={Protected} />
       <Route path='/login' render={() => <SignIn />} />
       <Route path='/login/callback' component={LoginCallback} />
+      <Route path='/signup' render={() => <SignUp />} />
     </Security>
   );
 };

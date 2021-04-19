@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 
+interface Credentials {
+  username: string;
+  password: string;
+}
+
 const SignInForm = () => {
   const { oktaAuth } = useOktaAuth();
   const [sessionToken, setSessionToken] = useState<string | undefined>();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    oktaAuth.signInWithCredentials({ username, password })
+    const credentials: Credentials = {
+      username: email,
+      password,
+    };
+    oktaAuth.signInWithCredentials(credentials)
       .then(res => {
         setSessionToken(res.sessionToken);
         // sessionToken is a one-use token, so make sure this is only called once
@@ -20,7 +29,7 @@ const SignInForm = () => {
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsername(e.target.value);
+    setEmail(e.target.value);
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,12 +43,12 @@ const SignInForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <label htmlFor="username">
-        Username:
+      <label htmlFor="email">
+        Email:
         <input
-          id="username"
+          id="email"
           type="text"
-          value={username}
+          value={email}
           onChange={handleUsernameChange}
         />
       </label>
