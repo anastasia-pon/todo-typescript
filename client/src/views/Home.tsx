@@ -4,7 +4,9 @@ import { useOktaAuth } from '@okta/okta-react';
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
+  // const { userData, setUserData } = useState();
   const history = useHistory();
+  console.log(authState);
 
   if (authState.isPending) {
     return <div>Loading...</div>;
