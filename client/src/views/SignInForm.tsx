@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 
-interface Credentials {
-  username: string;
-  password: string;
-}
+// interface Credentials {
+//   username: string;
+//   password: string;
+// }
 
 const SignInForm = () => {
   const { oktaAuth } = useOktaAuth();
