@@ -10,7 +10,7 @@ import { RequestWithJwt } from '../interfaces/request.interface';
 import oktaClient from '../authentication/oktaClient';
 import { authenticationRequired } from '../authentication/authentication';
 
-import { v4 as uuid } from 'uuid';
+// import { v4 as uuid } from 'uuid';
 
 /**
  * Router Definition
@@ -89,8 +89,7 @@ usersRouter.post('/', async (req: Request, res: Response) => {
     // const newUser = await oktaResponse.json();
     console.log(oktaResponse.id, 'test');
     const newUser = {
-      userId: uuid(),
-      oktaId: oktaResponse.id,
+      userId: oktaResponse.id,
       firstName: oktaResponse.profile.firstName,
       lastName: oktaResponse.profile.lastName,
       email: oktaResponse.profile.email,
