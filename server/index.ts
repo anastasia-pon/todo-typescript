@@ -8,7 +8,8 @@ import helmet from 'helmet';
 import mongoose from 'mongoose';
 
 import connectDB from './db/connect.db'
-import { usersRouter } from './users/users.router';
+import { usersRouter } from './routes/users.router';
+import { todosRouter } from './routes/todos.router';
 import { errorHandler } from './middleware/error.middleware';
 import { notFoundHandler } from './middleware/not-found.middleware';
 
@@ -35,7 +36,8 @@ app.use(cors());
 app.use(express.json());
 
 app.use('/api/users', usersRouter);
-app.get('/', (req, res) => res.send('Express + TypeScript Server'));
+app.use('/api/todos', todosRouter);
+app.get('/', (req, res) => res.send('Hello world!'));
 
 app.use(errorHandler);
 app.use(notFoundHandler);
