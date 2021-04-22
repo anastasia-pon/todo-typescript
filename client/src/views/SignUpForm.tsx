@@ -63,8 +63,10 @@ const SignUp = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      <p>Registrtation</p>
+      <p>Fields marked with * are required</p>
       <label htmlFor="firstName">
-        First Name:
+        First Name *
         <input
           id="firstName"
           type="text"
@@ -74,7 +76,7 @@ const SignUp = () => {
         />
       </label>
       <label htmlFor="lastName">
-        Last Name:
+        Last Name *
         <input
           id="lastName"
           type="text"
@@ -84,7 +86,7 @@ const SignUp = () => {
         />
       </label>
       <label htmlFor="email">
-        Email:
+        Email *
         <input
           id="email"
           type="text"
@@ -94,7 +96,7 @@ const SignUp = () => {
         />
       </label>
       <label htmlFor="password">
-        Password:
+        Password *
         <input
           id="password"
           type="password"
@@ -106,7 +108,7 @@ const SignUp = () => {
         Must be at least 8 characters long
       </label>
       <label htmlFor="confirmPassword">
-        Confirm Password:
+        Confirm Password *
         <input
           id="confirmPassword"
           type="password"
