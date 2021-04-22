@@ -6,6 +6,7 @@ import Home from './views/Home';
 import SignIn from './components/SignIn';
 import SignUp from './views/SignUpForm';
 import Protected from './Protected';
+import CreateList from './views/CreateList';
 
 interface OktaAuthType {
   issuer: string;
@@ -40,6 +41,7 @@ const AppWithRouterAccess = () => {
       onAuthRequired={onAuthRequired}
     >
       <SecureRoute path='/' exact component={Home} />
+      <SecureRoute path='/create' component={CreateList} />
       <SecureRoute path='/protected' component={Protected} />
       <Route path='/login' render={() => <SignIn />} />
       <Route path='/login/callback' component={LoginCallback} />
