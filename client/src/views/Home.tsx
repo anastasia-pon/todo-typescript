@@ -1,16 +1,32 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
+
+import { TodoList } from '../types/types';
+
+import { getAllLists } from '../modules/api';
 
 const Home = () => {
   const { authState, oktaAuth } = useOktaAuth();
-  // const { userData, setUserData } = useState();
+  const [todoLists, setTodosLists] = useState<TodoList[]>([]);
   const history = useHistory();
-  console.log(authState);
 
   if (authState.isPending) {
     return <div>Loading...</div>;
   }
+
+  useEffect(() => {
+    const token = authState.accessToken;
+    if (todoLists.length === 0 && token?.claims.cid) {
+      const fetchData = async () => {
+        const response = await getAllLists(token?.claims.cid, token?.accessToken);
+        const allBoxesJson = await response.json();
+        setTodosLists(allBoxesJson);
+      };
+      fetchData();
+    }
+  }, [authState]);
 
   const button = authState.isAuthenticated
     ? <button type="button" onClick={() => { oktaAuth.signOut(); }}>Logout</button>
@@ -18,11 +34,9 @@ const Home = () => {
 
   return (
     <div>
-      <Link to='/'>Home</Link>
-      <br />
-      <Link to='/protected'>Protected</Link>
-      <br />
       {button}
+      {todoLists.length === 0 && <p>There are no ToDo lists yet.</p>}
+      <button type="button" onClick={() => { history.push('/create'); }}>Create a List</button>
     </div>
   );
 };
