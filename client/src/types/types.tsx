@@ -21,8 +21,3 @@ export interface TodoList {
   coEditing: boolean;
   tasks?: TodoTask[];
 }
-
-export interface todoListsState {
-  todoLists?: TodoList[];
-  setTodosLists?: (value: TodoList[]) => void;
-};

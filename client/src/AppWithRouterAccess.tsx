@@ -40,12 +40,12 @@ const AppWithRouterAccess = () => {
       restoreOriginalUri={restoreOriginalUri}
       onAuthRequired={onAuthRequired}
     >
-      <SecureRoute path='/' exact component={Home} />
-      <SecureRoute path='/create' component={CreateList} />
-      <SecureRoute path='/protected' component={Protected} />
-      <Route path='/login' render={() => <SignIn />} />
-      <Route path='/login/callback' component={LoginCallback} />
-      <Route path='/signup' render={() => <SignUp />} />
+      <SecureRoute path="/" exact component={Home} />
+      <SecureRoute path="/create" component={CreateList} />
+      <SecureRoute path="/protected" component={Protected} />
+      <Route path="/login" render={() => <SignIn />} />
+      <Route path="/login/callback" component={LoginCallback} />
+      <Route path="/signup" render={() => <SignUp />} />
     </Security>
   );
 };

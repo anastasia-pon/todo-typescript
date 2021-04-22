@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 
 // interface Credentials {
@@ -20,12 +21,12 @@ const SignInForm = () => {
       password,
     };
     oktaAuth.signInWithCredentials(credentials)
-      .then(res => {
+      .then((res) => {
         setSessionToken(res.sessionToken);
         // sessionToken is a one-use token, so make sure this is only called once
         oktaAuth.signInWithRedirect({ sessionToken: res.sessionToken });
       })
-      .catch(err => console.log('Found an error', err));
+      .catch((err) => console.log('Found an error', err));
   };
 
   const handleUsernameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -65,4 +66,5 @@ const SignInForm = () => {
     </form>
   );
 };
+
 export default SignInForm;

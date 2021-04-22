@@ -5,8 +5,7 @@
   },
   "extends": [
     "plugin:react/recommended",
-    "airbnb",
-    "salt"
+    "airbnb-typescript"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -14,7 +13,11 @@
       "modules": true
     },
     "ecmaVersion": 12,
-    "sourceType": "module"
+    "sourceType": "module",
+    "project": [
+      "./tsconfig.eslint.json",
+      "./packages/*/tsconfig.json"
+    ]
   },
   "plugins": [
     "react"

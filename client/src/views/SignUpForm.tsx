@@ -1,6 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable consistent-return */
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 import { createNewUser } from '../modules/api';
 import Error from '../components/Error';
