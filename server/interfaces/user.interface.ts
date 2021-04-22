@@ -1,6 +1,5 @@
 export interface BaseUser {
   userId: string;
-  oktaId: string;
   firstName: string;
   lastName: string;
   email: string;
