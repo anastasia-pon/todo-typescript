@@ -7,11 +7,6 @@ const UserSchema = new Schema<UserDocument>({
     unique: true,
     required: true,
   },
-  oktaId: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   firstName: {
     type: String,
     required: true,
@@ -29,13 +24,12 @@ const UserSchema = new Schema<UserDocument>({
 
 export interface UserDocument extends Document {
   userId: string;
-  oktaId: string;
   firstName: string;
   lastName: string;
   email: string;
 }
 
-export default model<UserDocument>('User', UserSchema)
+export default model<UserDocument>('User', UserSchema);
 // export interface UserModel extends Model<UserDocument> {
 //   findUserByEmail(email: string): Promise<UserDocument>
 // }
