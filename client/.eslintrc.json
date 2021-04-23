@@ -24,7 +24,8 @@
   ],
   "rules": {
     "react/jsx-filename-extension": [0],
-    "import/extensions": 0
+    "import/extensions": 0,
+    "react/prop-types": "off"
   },
   "settings": {
     "import/resolver": {

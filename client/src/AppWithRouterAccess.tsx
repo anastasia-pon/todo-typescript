@@ -2,21 +2,18 @@ import React from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { Security, SecureRoute, LoginCallback } from '@okta/okta-react';
 import { OktaAuth, toRelativeUrl } from '@okta/okta-auth-js';
+
+import { AllListsProvider } from './context/AllListsContext';
+
 import Home from './views/Home';
+import List from './views/List';
+import Nav from './components/Nav/Nav';
 import SignIn from './components/SignIn';
 import SignUp from './views/SignUpForm';
 import Protected from './Protected';
 import CreateList from './views/CreateList';
 
-interface OktaAuthType {
-  issuer: string;
-  clientId: string;
-  redirectUri: string;
-  onAuthRequired: () => void;
-  pkce: boolean;
-}
-
-const AppWithRouterAccess = () => {
+const AppWithRouterAccess: React.FC = () => {
   const history = useHistory();
   const onAuthRequired = () => {
     history.push('/login');
@@ -40,9 +37,13 @@ const AppWithRouterAccess = () => {
       restoreOriginalUri={restoreOriginalUri}
       onAuthRequired={onAuthRequired}
     >
-      <SecureRoute path="/" exact component={Home} />
-      <SecureRoute path="/create" component={CreateList} />
+      <Nav />
+      <AllListsProvider>
+        <SecureRoute path="/" exact component={Home} />
+        <SecureRoute path="/create" component={CreateList} />
+      </AllListsProvider>
       <SecureRoute path="/protected" component={Protected} />
+      <Route path="/list/:idParam" component={List} />
       <Route path="/login" render={() => <SignIn />} />
       <Route path="/login/callback" component={LoginCallback} />
       <Route path="/signup" render={() => <SignUp />} />

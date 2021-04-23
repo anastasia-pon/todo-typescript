@@ -6,7 +6,7 @@ import { useOktaAuth } from '@okta/okta-react';
 import { createNewUser } from '../modules/api';
 import Error from '../components/Error';
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
   const { oktaAuth } = useOktaAuth();
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -119,8 +119,9 @@ const SignUp = () => {
         />
       </label>
       {!matchPasswords && <p>Passwords do not match</p>}
-      <input id="submit" type="submit" value="Submit" />
+      <button id="submit" type="submit">Sign Up</button>
       {error && <Error setError={setError} errorMessage={errorMessage} />}
+      <a href="/login">Already have an account?</a>
     </form>
   );
 };

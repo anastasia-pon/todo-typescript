@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-const Form = () => (
+const Form: React.FC = () => (
   <form className="form">
     <h2>Register New ToDos</h2>
     <input type="text" className="form__input" id="title" name="title" placeholder="Add a title..." required />

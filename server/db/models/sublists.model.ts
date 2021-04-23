@@ -1,5 +1,4 @@
 import { Document, model, Schema } from "mongoose";
-import { TaskSchema, TaskDocument } from './tasks.model';
 
 export const SublistSchema = new Schema<SublistDocument>({
   sublistId: {
@@ -20,7 +19,7 @@ export const SublistSchema = new Schema<SublistDocument>({
     type: Number,
     required: true,
   },
-  tasks: [TaskSchema],
+  tasks: [String],
 });
 
 export interface SublistDocument extends Document {
@@ -28,7 +27,7 @@ export interface SublistDocument extends Document {
   listId: string;
   userId: boolean;
   order: number;
-  tasks: TaskDocument[];
+  tasks: string[];
 };
 
-export default model<SublistDocument>('tasks', SublistSchema);
+export default model<SublistDocument>('sublist', SublistSchema);

@@ -7,7 +7,7 @@ import { useOktaAuth } from '@okta/okta-react';
 //   password: string;
 // }
 
-const SignInForm = () => {
+const SignInForm: React.FC = () => {
   const { oktaAuth } = useOktaAuth();
   const [sessionToken, setSessionToken] = useState<string | undefined>();
   const [email, setEmail] = useState('');
@@ -63,6 +63,7 @@ const SignInForm = () => {
         />
       </label>
       <input id="submit" type="submit" value="Submit" />
+      <a href="/signup">Don&apos;t have an account?</a>
     </form>
   );
 };

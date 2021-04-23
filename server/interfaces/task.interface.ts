@@ -1,14 +1,16 @@
 export interface BaseTask {
-  title: string;
   taskId: string;
+  parentId: string;
+  listId: string;
+  title: string;
   done: boolean;
-  order: number;
-  cost: number;
+  order?: number;
+  cost?: string;
   type: string;
   deadline?: string;
-  carbs?: number;
-  fat?: number;
-  protein?: number;
+  carbs?: string;
+  fat?: string;
+  protein?: string;
   img?: string;
-  sublistId?: string;
+  subtasks: string[];
 };

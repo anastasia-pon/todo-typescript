@@ -80,14 +80,6 @@ usersRouter.post('/', async (req: Request, res: Response) => {
       },
     };
     const oktaResponse = await oktaClient.createUser(oktaUser);
-    // if (oktaResponse.errorCode) {
-    //   console.log('test')
-    //   const badResponse = await oktaResponse.json();
-    //   throw new Error(badResponse.errorCauses[0].errorSummary);
-    //   // return res.status(400).json(err.message);
-    // }
-    // const newUser = await oktaResponse.json();
-    console.log(oktaResponse.id, 'test');
     const newUser = {
       userId: oktaResponse.id,
       firstName: oktaResponse.profile.firstName,
@@ -96,21 +88,6 @@ usersRouter.post('/', async (req: Request, res: Response) => {
     };
     const dbUser = await UserService.createUser(newUser);
     return res.status(201).json(dbUser);
-    // const response = await fetch(process.env.OKTA_ORG_URL || 'noOktaURL', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-type': 'application/json',
-    //     Authorization: `SSWS ${oktaToken}`,
-    //   },
-    //   body: JSON.stringify(oktaUser),
-    // });
-    // console.log(response);
-    // const data = await response.json();
-
-    // const user: BaseUser = req.body;
-    // const newUser = await UserService.create(user);
-
-    // res.status(201).json(newUser);
   } catch (err) {
     console.log(err);
     res.status(400).json(err.errorCauses[0].errorSummary);

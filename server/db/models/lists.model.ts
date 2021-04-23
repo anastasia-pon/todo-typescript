@@ -1,5 +1,4 @@
 import { Document, model, Schema } from "mongoose";
-import { TaskSchema, TaskDocument } from './tasks.model';
 
 const ListSchema = new Schema<ListDocument>({
   title: {
@@ -23,7 +22,7 @@ const ListSchema = new Schema<ListDocument>({
     type: Boolean,
     required: true,
   },
-	tasks: [TaskSchema],
+	tasks: [String],
 });
 
 // export interface TaskDocument extends Document {
@@ -47,7 +46,7 @@ export interface ListDocument extends Document {
   listId: string;
   userId: string;
   coEditing: boolean;
-  tasks?: TaskDocument[];
+  tasks?: string[];
 };
 
 export default model<ListDocument>('lists', ListSchema);

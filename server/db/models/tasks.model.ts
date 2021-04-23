@@ -1,13 +1,20 @@
 import { Document, model, Schema } from "mongoose";
 
 export const TaskSchema = new Schema<TaskDocument>({
-  title: {
+	taskId: {
     type: String,
     required: true,
   },
-	taskId: {
+  parentId: {
     type: String,
-    unique: true,
+    equired: true,
+  },
+  listId: {
+    type: String,
+    required: true,
+  },
+  title: {
+    type: String,
     required: true,
   },
   done: {
@@ -16,11 +23,9 @@ export const TaskSchema = new Schema<TaskDocument>({
   },
   order: {
     type: Number,
-    required: true,
   },
   cost: {
-    type: Number,
-    required: true,
+    type: String,
   },
 	type: {
     type: String,
@@ -30,36 +35,35 @@ export const TaskSchema = new Schema<TaskDocument>({
     type: String,
   },
 	carbs: {
-    type: Number,
+    type: String,
   },
 	fat: {
-    type: Number,
+    type: String,
   },
   protein: {
-    type: Number,
+    type: String,
   },
   img: {
     type: String,
   },
-  sublistId: {
-    type: String,
-    required: true,
-  },
+  subtasks: [String],
 });
 
 export interface TaskDocument extends Document {
-  title: string;
   taskId: string;
+  parentId: string;
+  listId: string;
+  title: string;
   done: boolean;
-  order: number;
-  cost: number;
+  order?: number;
+  cost?: string;
   type: string;
   deadline?: string;
-  carbs?: number;
-  fat?: number;
-  protein?: number;
+  carbs?: string;
+  fat?: string;
+  protein?: string;
   img?: string;
-  sublistId?: string;
+  subtasks: string[];
 };
 
 export default model<TaskDocument>('tasks', TaskSchema);

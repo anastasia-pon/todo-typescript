@@ -13,11 +13,11 @@ export interface TodoTask {
   sublistId?: string;
 }
 
-export interface TodoList {
-  title: string;
-  desc: string;
-  listId: string;
-  userId: string;
-  coEditing: boolean;
-  tasks?: TodoTask[];
-}
+// export interface TodoList {
+//   title: string;
+//   desc: string;
+//   listId: string;
+//   userId: string;
+//   coEditing: boolean;
+//   tasks?: TodoTask[];
+// }
