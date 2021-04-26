@@ -2,8 +2,10 @@
 A collaborative ToDo app that allows users create and manage todo lists together.
 
 Language: TypeScript
-Framework: React
+Frontend: React, SCSS
 Backend: Node
+Database: MongoDB
+Authorization: Okta
 Tests: Cypress
 
 ## User Stories
@@ -22,3 +24,11 @@ The app implement the following user stories:
     - required: “carbohydrate”, “fat”, “protein” (each specified in g/100g)
 - I as a user can be sure that my todos will be persisted so that important information isnot lost when server restarts
 - I as a user can regisster and access my todo lists at any time
+
+## Live App
+
+The app is deployed at https://ts-todo-frontend.herokuapp.com/
+
+Feel free to register or use these credentials:
+email: test@test.com
+password: 12345678
