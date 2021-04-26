@@ -31,6 +31,21 @@ interface BaseList {
   listId: string | undefined;
 }
 
+interface TodoTask {
+  title: string;
+  taskId: string;
+  done: boolean;
+  order: number;
+  cost: number;
+  type: string;
+  deadline?: string;
+  carbs?: number;
+  fat?: number;
+  protein?: number;
+  img?: string;
+  sublistId?: string;
+}
+
 interface ListState extends BaseList {
   coEditing?: boolean;
   tasks?: TodoTask[];
@@ -45,7 +60,6 @@ interface FullListState {
     coEditing: string;
     tasks: [];
   };
-  sublists: [];
   tasks: [];
 }
 
@@ -63,5 +77,12 @@ interface BaseTask {
   fat?: string;
   protein?: string;
   img?: string;
-  subtasks: string[];
+  tasks: string[];
+}
+
+interface Guest {
+  id: string;
+  name: string;
+  x?: number;
+  y?: number;
 }

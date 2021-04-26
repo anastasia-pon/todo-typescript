@@ -65,6 +65,15 @@ const deleteTask = (taskId: string, parentId: string, listId: string) => fetch(`
   body: JSON.stringify({ taskId, parentId, listId }),
 });
 
+const deleteList = (listId: string, accessToken: string | undefined) => fetch(`${baseUrl}api/todos/delete`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    Authorization: `Bearer ${accessToken}`,
+  },
+  body: JSON.stringify({ listId }),
+});
+
 export {
   createNewUser,
   getAllLists,
@@ -73,4 +82,5 @@ export {
   createNewTask,
   updateTask,
   deleteTask,
+  deleteList,
 };

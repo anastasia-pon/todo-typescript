@@ -1,10 +1,11 @@
 import Task from "../models/tasks.model";
-import { BaseTask } from "../../interfaces/task.interface";
-// import User from '../models/users.model';
+import { BaseTask } from "../interfaces/task.interface";
 
 export const findByTaskId = (taskId: string) => Task.find({ taskId });
 
 export const findByListId = (listId: string) => Task.find({ listId });
+
+export const findByParentId = (parentId: string) => Task.find({ parentId });
 
 export const createTask = (task: BaseTask) => new Task(task).save();
 
@@ -12,11 +13,11 @@ export const deleteTask = (taskId: string) => Task.deleteOne({ taskId });
 
 export const addSubtask = (taskId: string, subtaskId: string) => Task.findOneAndUpdate({
   taskId
-}, { $push: { subtasks: subtaskId } }, { upsert: true });
+}, { $push: { tasks: subtaskId } }, { upsert: true });
 
-export const deleteSubtask = (taskId: string, subtaskId: string) => Task.findOneAndUpdate({
+export const deleteSubtaskId = (taskId: string, subtaskId: string) => Task.findOneAndUpdate({
   taskId
-}, { $pull: { subtasks: subtaskId } });
+}, { $pull: { tasks: subtaskId } });
 
 export const updateTask = (task: BaseTask) => Task.findOneAndUpdate({
   taskId: task.taskId
@@ -33,3 +34,5 @@ export const updateTask = (task: BaseTask) => Task.findOneAndUpdate({
       img: task.img,
     }
 }, { upsert: true });
+
+export const deleteByListId = (listId: string) => Task.deleteMany({ listId });

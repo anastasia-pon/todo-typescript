@@ -5,10 +5,6 @@ export interface BaseUser {
   email: string;
 }
 
-// export interface User extends BaseUser {
-//   id: string;
-// }
-
 export interface OktaUser {
   profile: {
     firstName: string;

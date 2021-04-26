@@ -46,7 +46,7 @@ export const TaskSchema = new Schema<TaskDocument>({
   img: {
     type: String,
   },
-  subtasks: [String],
+  tasks: [String],
 });
 
 export interface TaskDocument extends Document {
@@ -63,7 +63,7 @@ export interface TaskDocument extends Document {
   fat?: string;
   protein?: string;
   img?: string;
-  subtasks: string[];
+  tasks: string[];
 };
 
 export default model<TaskDocument>('tasks', TaskSchema);

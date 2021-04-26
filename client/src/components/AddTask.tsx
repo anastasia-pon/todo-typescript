@@ -1,23 +1,25 @@
 /* eslint-disable max-len */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import * as React from 'react';
 import { useState } from 'react';
 import { v4 as uuid } from 'uuid';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-// import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const AddTask = (props: {
   listId: string;
   parentId: string;
-  handleAddTask: (task: BaseTask) => {},
+  handleAddTask: (task: BaseTask) => void,
+  setAddingSubtask: (done: boolean) => void;
+  addingSubtask: boolean;
 }) => {
-  const { listId, parentId, handleAddTask } = props;
+  const {
+    listId, parentId, handleAddTask, addingSubtask, setAddingSubtask,
+  } = props;
   const [title, setTitle] = useState('');
   const [type, setType] = useState('other');
   const [deadline, setDeadline] = useState('');
   const [carbs, setCarbs] = useState('');
   const [fat, setFat] = useState('');
   const [protein, setProtein] = useState('');
-  const [imgUrl, setImgUrl] = useState('');
   const [cost, setCost] = useState('');
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
@@ -26,10 +28,12 @@ const AddTask = (props: {
   const handleCarbsChange = (e: React.ChangeEvent<HTMLInputElement>) => setCarbs(e.target.value);
   const handleFatChange = (e: React.ChangeEvent<HTMLInputElement>) => setFat(e.target.value);
   const handleProteinChange = (e: React.ChangeEvent<HTMLInputElement>) => setProtein(e.target.value);
-  const handleImgUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => setImgUrl(e.target.value);
   const handleCostChange = (e: React.ChangeEvent<HTMLInputElement>) => setCost(e.target.value);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (setAddingSubtask) {
+      setAddingSubtask(false);
+    }
     const newTask: BaseTask = {
       taskId: uuid(),
       parentId,
@@ -42,24 +46,23 @@ const AddTask = (props: {
       carbs: type === 'food' ? carbs : '',
       fat: type === 'food' ? fat : '',
       protein: type === 'food' ? protein : '',
-      img: type === 'food' ? imgUrl : '',
-      subtasks: [],
+      tasks: [],
     };
 
     handleAddTask(newTask);
     setTitle('');
-    setType('Other');
+    // setType('other');
     setDeadline('');
     setCarbs('');
     setFat('');
     setProtein('');
-    setImgUrl('');
     setCost('');
   };
   return (
-    <form id={listId} onSubmit={handleSubmit}>
+    <form className={addingSubtask ? 'addtask addsub' : 'addtask'} id={listId} onSubmit={handleSubmit} onClick={(e) => e.stopPropagation()} onKeyUp={(e) => e.stopPropagation()}>
       <label htmlFor="title">
         <input
+          className="input__title"
           id="title"
           type="text"
           placeholder="Add a title"
@@ -69,19 +72,20 @@ const AddTask = (props: {
         />
       </label>
       <label htmlFor="type">
-        <input type="radio" value="work" name="type" onChange={handleTypeChange} />
+        <input className="input__type" type="radio" value="work" name="type" onChange={handleTypeChange} />
         {' '}
         Work
-        <input type="radio" value="food" name="type" onChange={handleTypeChange} />
+        <input className="input__type" type="radio" value="food" name="type" onChange={handleTypeChange} />
         {' '}
         Food
-        <input type="radio" value="other" name="type" onChange={handleTypeChange} defaultChecked />
+        <input className="input__type" type="radio" value="other" name="type" onChange={handleTypeChange} defaultChecked />
         {' '}
         Other
       </label>
       {type === 'work' && (
         <label htmlFor="deadline">
           <input
+            className="input__deadline"
             id="deadline"
             type="date"
             placeholder="Add a deadline"
@@ -95,56 +99,45 @@ const AddTask = (props: {
         <>
           <label htmlFor="carbs">
             <input
+              className="input__carbs"
               id="carbs"
               type="number"
               pattern="^\d+$"
-              placeholder="Add a carbs"
               value={carbs}
               onChange={handleCarbsChange}
               required
             />
-            {' '}
             g/100g
           </label>
           <label htmlFor="fat">
             <input
+              className="input__fat"
               id="fat"
               type="number"
               pattern="^\d+$"
-              placeholder="Add a fat"
               value={fat}
               onChange={handleFatChange}
               required
             />
-            {' '}
             g/100g
           </label>
           <label htmlFor="protein">
             <input
+              className="input__protein"
               id="protein"
               type="number"
               pattern="^\d+$"
-              placeholder="Add a protein"
               value={protein}
               onChange={handleProteinChange}
               required
             />
-            {' '}
             g/100g
-          </label>
-          <label htmlFor="imgUrl">
-            <input
-              id="imgUrl"
-              type="text"
-              placeholder="Add an imgUrl"
-              value={imgUrl}
-              onChange={handleImgUrlChange}
-            />
           </label>
         </>
       )}
       <label htmlFor="cost">
         <input
+          className="input__cost"
           id="cost"
           type="number"
           pattern="^\d+$"
@@ -152,10 +145,12 @@ const AddTask = (props: {
           value={cost}
           onChange={handleCostChange}
         />
-        {' '}
         SEK
       </label>
-      <button type="submit">Add a Task</button>
+      <div className="addtask__btns">
+        <button className="btn btn-accent" onClick={(e) => e.stopPropagation()} type="submit">Add a Task</button>
+        {addingSubtask && <button className="btn btn-accent" onClick={(e) => { e.stopPropagation(); setAddingSubtask(false); }} type="submit">Cancel</button>}
+      </div>
     </form>
   );
 };

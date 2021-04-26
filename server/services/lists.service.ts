@@ -1,5 +1,5 @@
 import List from "../models/lists.model";
-import { BaseList } from "../../interfaces/list.interface";
+import { BaseList } from "../interfaces/list.interface";
 
 export const findByUserId = (userId: string) => List.find({ userId });
 
@@ -11,6 +11,8 @@ export const addTask = (listId: string, taskId: string) => List.findOneAndUpdate
   listId
 }, { $push: { tasks: taskId } }, { upsert: true });
 
-export const deleteTask = (listId: string, subtaskId: string) => List.findOneAndUpdate({
+export const deleteTaskId = (listId: string, subtaskId: string) => List.findOneAndUpdate({
   listId
 }, { $pull: { tasks: subtaskId } });
+
+export const deleteList = (listId: string) => List.deleteOne({ listId });

@@ -9,7 +9,7 @@ const Error = (props: {
   const { setError, errorMessage } = props;
 
   return (
-    <div>
+    <div className="error">
       <button type="button" onClick={() => setError(false)}>
         <FontAwesomeIcon icon={faTimes} />
       </button>

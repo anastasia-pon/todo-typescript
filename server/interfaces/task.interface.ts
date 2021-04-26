@@ -12,5 +12,5 @@ export interface BaseTask {
   fat?: string;
   protein?: string;
   img?: string;
-  subtasks: string[];
+  tasks: string[];
 };

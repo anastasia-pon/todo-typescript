@@ -2,40 +2,13 @@
  * Required External Modules and Interfaces
  */
 import express, { Request, Response } from "express";
-import * as UserService from "../db/services/users.service";
-import { BaseUser, OktaUser } from "../interfaces/user.interface";
-import { UserDocument } from "../db/models/users.model";
-import { RequestWithJwt } from '../interfaces/request.interface';
-// import fetch from 'node-fetch';
+import * as UserService from "../services/users.service";
+import { OktaUser } from "../interfaces/user.interface";
+import { UserDocument } from "../models/users.model";
 import oktaClient from '../authentication/oktaClient';
 import { authenticationRequired } from '../authentication/authentication';
 
-// import { v4 as uuid } from 'uuid';
-
-/**
- * Router Definition
- */
 export const usersRouter = express.Router();
-// const oktaUrl = process.env.OKTA_ORG_URL || 'noOktaUrl';
-// const oktaToken = 'noOktaToken' || process.env.OKTA_TOKEN;
-/**
- * Controller Definitions
- * If you ever need to use a database like MongoDB or PostgreSQL
- * to persist data, you only need to modify the logic of the service provider,
- * the ItemService module, and not the logic of the consumers, your controllers.
- */
-
-// GET items
-
-// usersRouter.get("/", async (req: Request, res: Response) => {
-//   try {
-//     const users: User[] = await UserService.findAll();
-
-//     res.status(200).send(users);
-//   } catch (e) {
-//     res.status(500).send(e.message);
-//   }
-// });
 
 usersRouter.post('/user', authenticationRequired, async (req: Request, res: Response) => {
   const { email } = req.body;
@@ -93,39 +66,3 @@ usersRouter.post('/', async (req: Request, res: Response) => {
     res.status(400).json(err.errorCauses[0].errorSummary);
   }
 });
-
-// PUT items/:id
-
-// usersRouter.put("/:id", async (req: Request, res: Response) => {
-//   const id: string = req.params.id;
-
-//   try {
-//     const userUpdate: User = req.body;
-
-//     const existingUser: User | undefined = await UserService.find(id);
-
-//     if (existingUser) {
-//       const updatedItem = await UserService.update(id, userUpdate);
-//       return res.status(200).json(updatedItem);
-//     }
-
-//     const newUser = await UserService.create(userUpdate);
-
-//     res.status(201).json(newUser);
-//   } catch (e) {
-//     res.status(500).send(e.message);
-//   }
-// });
-
-// // DELETE items/:id
-
-// usersRouter.delete("/:id", async (req: Request, res: Response) => {
-//   try {
-//     const id: string = req.params.id;
-//     await UserService.remove(id);
-
-//     res.sendStatus(204);
-//   } catch (e) {
-//     res.status(500).send(e.message);
-//   }
-// });

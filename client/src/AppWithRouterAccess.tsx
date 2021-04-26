@@ -7,10 +7,9 @@ import { AllListsProvider } from './context/AllListsContext';
 
 import Home from './views/Home';
 import List from './views/List';
-import Nav from './components/Nav/Nav';
+import Nav from './components/Nav';
 import SignIn from './components/SignIn';
 import SignUp from './views/SignUpForm';
-import Protected from './Protected';
 import CreateList from './views/CreateList';
 
 const AppWithRouterAccess: React.FC = () => {
@@ -38,15 +37,16 @@ const AppWithRouterAccess: React.FC = () => {
       onAuthRequired={onAuthRequired}
     >
       <Nav />
-      <AllListsProvider>
-        <SecureRoute path="/" exact component={Home} />
-        <SecureRoute path="/create" component={CreateList} />
-      </AllListsProvider>
-      <SecureRoute path="/protected" component={Protected} />
-      <Route path="/list/:idParam" component={List} />
-      <Route path="/login" render={() => <SignIn />} />
-      <Route path="/login/callback" component={LoginCallback} />
-      <Route path="/signup" render={() => <SignUp />} />
+      <main className="main">
+        <AllListsProvider>
+          <SecureRoute path="/" exact component={Home} />
+          <SecureRoute path="/create" component={CreateList} />
+          <Route exact path="/list/:roomId" component={List} />
+        </AllListsProvider>
+        <Route path="/login" render={() => <SignIn />} />
+        <Route path="/login/callback" component={LoginCallback} />
+        <Route path="/signup" render={() => <SignUp />} />
+      </main>
     </Security>
   );
 };

@@ -21,7 +21,7 @@ const CreateList: React.FC = () => {
   }
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-  const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => setDesc(e.target.value);
+  const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => setDesc(e.target.value);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const newList: BaseList = {
@@ -35,37 +35,36 @@ const CreateList: React.FC = () => {
       setError(true);
       return setErrorMessage('Could not save. Please, try again.');
     }
-    const listRes = await response.json();
-    console.log(listRes, 'response');
+    await response.json();
     fetchLists();
-    // return history.push('/');
     return history.push(`/list/${newList.listId}`);
   };
   return (
-    <form onSubmit={handleSubmit}>
-      <p>Create a ToDo list</p>
+    <form className="create" onSubmit={handleSubmit}>
+      <h2>Create a ToDo list</h2>
       <label htmlFor="title">
-        Title *
         <input
+          className="create__title"
           id="title"
           type="text"
           value={title}
+          placeholder="Add a title *"
           onChange={handleTitleChange}
           required
         />
       </label>
       <label htmlFor="desc">
-        Description *
-        <input
+        <textarea
+          className="create__desc"
           id="desc"
-          type="text"
           value={desc}
+          placeholder="Add a description *"
           onChange={handleDescriptionChange}
           required
         />
       </label>
       <p>Fields marked with * are required</p>
-      <button type="submit">Create</button>
+      <button className="btn btn-accent" type="submit">Create</button>
       {error && <Error setError={setError} errorMessage={errorMessage} />}
     </form>
   );

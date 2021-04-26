@@ -25,21 +25,6 @@ const ListSchema = new Schema<ListDocument>({
 	tasks: [String],
 });
 
-// export interface TaskDocument extends Document {
-//   title: string;
-//   taskId: string;
-//   done: boolean;
-//   order: number;
-//   cost: number;
-//   type: string;
-//   deadline?: string;
-//   carbs?: number;
-//   fat?: number;
-//   protein?: number;
-//   img?: string;
-//   sublistId?: string;
-// };
-
 export interface ListDocument extends Document {
   title: string;
   desc: string;

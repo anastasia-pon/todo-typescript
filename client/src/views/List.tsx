@@ -1,102 +1,72 @@
 /* eslint-disable max-len */
 import * as React from 'react';
-import { useState, useEffect } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
-import {
-  getList, createNewTask, updateTask, deleteTask,
-} from '../modules/api';
-// import { v4 as uuid } from 'uuid';
+import useList from '../modules/useList';
 
-// import { AllListsContext } from '../context/AllListsContext';
 import Error from '../components/Error';
 import AddTask from '../components/AddTask';
 import Task from '../components/Task';
 
 const List: React.FC = () => {
-  const { idParam } = useParams<{ idParam: string }>();
+  const { roomId } = useParams<{ roomId: string }>();
+  const {
+    fullList,
+    handleAddTask,
+    handleUpdateTask,
+    handleDeleteTask,
+    guests,
+    error,
+    setError,
+    errorMessage,
+  } = useList(roomId);
   const history = useHistory();
-  const [fullList, setFullList] = useState<FullListState>();
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  // const { userData, fetchLists } = useContext(AllListsContext);
-  // const [title, setTitle] = useState('');
-  // const [desc, setDesc] = useState('');
-  console.log(fullList);
-  if (!idParam) {
+
+  if (!roomId) {
     history.push('/');
     return null;
   }
-  const fetchList = async () => {
-    const response = await getList(idParam);
-    if (response.ok) {
-      const listResponse = await response.json();
-      setFullList(listResponse);
-    } else {
-      setError(true);
-      setErrorMessage('Could not fetch the list.');
-    }
-  };
 
-  const handleAddTask = async (newTask: BaseTask) => {
-    const taskResponse = await createNewTask(newTask);
-    if (taskResponse.ok) {
-      fetchList();
-    } else {
-      setError(true);
-      setErrorMessage('Could not add the task.');
-    }
-  };
-
-  const handleUpdateTask = async (updatedTask: BaseTask) => {
-    const taskResponse = await updateTask(updatedTask);
-    if (taskResponse.ok) {
-      fetchList();
-    } else {
-      setError(true);
-      setErrorMessage('Could not add the task.');
-    }
-  };
-
-  const handleDeleteTask = async (taskId: string, parentId: string, listId: string) => {
-    const taskResponse = await deleteTask(taskId, parentId, listId);
-    if (taskResponse.ok) {
-      fetchList();
-    } else {
-      setError(true);
-      setErrorMessage('Could not delete the task.');
-    }
-  };
-
-  useEffect(() => {
-    if (!fullList && idParam) {
-      fetchList();
-    }
-  }, []);
+  if (!fullList || Object.keys(fullList.list).length === 0) {
+    return <p>List does not exist.</p>;
+  }
   return (
-    <main>
-      <div className="main__container">
-        {error && <Error setError={setError} errorMessage={errorMessage} />}
-        {fullList && (
-          <div id={fullList.list.listId}>
-            <p>{fullList.list.title}</p>
-            <p>{fullList.list.desc}</p>
+    <div className="main__container">
+      {error && <Error setError={setError} errorMessage={errorMessage} />}
+      <div className="list__guests">
+        {guests.length > 0 && guests.map((g) => (
+          <p key={g.id}>
+            {g.name}
+            {' '}
+            is here!
+          </p>
+        ))}
+      </div>
+      {fullList && Object.keys(fullList.list).length > 0 && (
+        <div className="list__container" id={fullList.list.listId}>
+          <h2>{fullList.list.title}</h2>
+          <p className="list__container__desc">{fullList.list.desc}</p>
+          <AddTask
+            setAddingSubtask={() => {}}
+            addingSubtask={false}
+            listId={fullList.list.listId}
+            parentId={fullList.list.listId}
+            handleAddTask={handleAddTask}
+          />
+          <div className="tasks__container">
             {fullList.tasks.map((t: BaseTask) => t.parentId === fullList.list.listId && (
               <Task
+                tasks={fullList.tasks}
                 task={t}
                 handleUpdateTask={handleUpdateTask}
                 handleDeleteTask={handleDeleteTask}
+                handleAddTask={handleAddTask}
                 key={t.taskId}
               />
             ))}
-            <AddTask
-              listId={fullList.list.listId}
-              parentId={fullList.list.listId}
-              handleAddTask={handleAddTask}
-            />
           </div>
-        )}
-      </div>
-    </main>
+        </div>
+      )}
+    </div>
   );
 };
 

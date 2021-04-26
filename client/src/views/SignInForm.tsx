@@ -2,11 +2,6 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useOktaAuth } from '@okta/okta-react';
 
-// interface Credentials {
-//   username: string;
-//   password: string;
-// }
-
 const SignInForm: React.FC = () => {
   const { oktaAuth } = useOktaAuth();
   const [sessionToken, setSessionToken] = useState<string | undefined>();
@@ -23,7 +18,6 @@ const SignInForm: React.FC = () => {
     oktaAuth.signInWithCredentials(credentials)
       .then((res) => {
         setSessionToken(res.sessionToken);
-        // sessionToken is a one-use token, so make sure this is only called once
         oktaAuth.signInWithRedirect({ sessionToken: res.sessionToken });
       })
       .catch((err) => console.log('Found an error', err));
@@ -38,32 +32,33 @@ const SignInForm: React.FC = () => {
   };
 
   if (sessionToken) {
-    // Hide form while sessionToken is converted into id/access tokens
     return null;
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="signin" onSubmit={handleSubmit}>
       <label htmlFor="email">
-        Email:
         <input
+          className="signin__email"
           id="email"
           type="text"
           value={email}
+          placeholder="Email"
           onChange={handleUsernameChange}
         />
       </label>
       <label htmlFor="password">
-        Password:
         <input
+          className="signin__pass"
           id="password"
           type="password"
           value={password}
+          placeholder="Password"
           onChange={handlePasswordChange}
         />
       </label>
-      <input id="submit" type="submit" value="Submit" />
-      <a href="/signup">Don&apos;t have an account?</a>
+      <input className="btn btn-accent" id="submit" type="submit" value="Sign In" />
+      <a className="link" href="/signup">Don&apos;t have an account?</a>
     </form>
   );
 };

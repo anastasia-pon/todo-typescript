@@ -30,9 +30,3 @@ export interface UserDocument extends Document {
 }
 
 export default model<UserDocument>('User', UserSchema);
-// export interface UserModel extends Model<UserDocument> {
-//   findUserByEmail(email: string): Promise<UserDocument>
-// }
-// const User = mongoose.model('users', userSchema);
-
-// module.exports.User = User;

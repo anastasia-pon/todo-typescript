@@ -4,8 +4,11 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
+import http from 'http';
 import helmet from 'helmet';
 import mongoose from 'mongoose';
+import { Server } from "socket.io";
+import initializeSocketIO from "./socket";
 
 import connectDB from './db/connect.db'
 import { usersRouter } from './routes/users.router';
@@ -46,12 +49,19 @@ app.use(notFoundHandler);
  * Server Activation
  */
 
-// app.listen(PORT, () => {
-//   console.log(`Listening on port ${PORT}`);
-// });
+const  server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: ['http://localhost:3000'],
+    credentials: true
+  }
+});
+
+initializeSocketIO(io);
+
 connectDB().then(async () => {
-  app.listen(process.env.PORT, () => {
-    console.log(`Listening on port ${process.env.PORT}`);
+  server.listen(PORT, () => {
+    console.log(`Listening on port ${PORT}`);
   });
 });
 

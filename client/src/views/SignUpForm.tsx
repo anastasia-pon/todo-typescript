@@ -25,7 +25,6 @@ const SignUp: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       setMatchPasswords(false);
     } else {
@@ -63,13 +62,13 @@ const SignUp: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p>Registrtation</p>
-      <p>Fields marked with * are required</p>
+    <form className="signup" onSubmit={handleSubmit}>
+      <h2>Sign Up</h2>
       <label htmlFor="firstName">
-        First Name *
         <input
+          className="signup__first"
           id="firstName"
+          placeholder="First name *"
           type="text"
           value={firstName}
           onChange={handleFirstNameChange}
@@ -77,51 +76,56 @@ const SignUp: React.FC = () => {
         />
       </label>
       <label htmlFor="lastName">
-        Last Name *
         <input
+          className="signup__last"
           id="lastName"
           type="text"
+          placeholder="Last name *"
           value={lastName}
           onChange={handleLastNameChange}
           required
         />
       </label>
       <label htmlFor="email">
-        Email *
         <input
+          className="signup__email"
           id="email"
           type="text"
           value={email}
+          placeholder="Email *"
           onChange={handleEmailChange}
           required
         />
       </label>
       <label htmlFor="password">
-        Password *
         <input
+          className="signup__pass"
           id="password"
           type="password"
+          placeholder="Password *"
           value={password}
           pattern="^.{8,}$"
           onChange={handlePasswordChange}
           required
         />
-        Must be at least 8 characters long
       </label>
+      <p className="signup__message">Must be at least 8 characters long</p>
       <label htmlFor="confirmPassword">
-        Confirm Password *
         <input
+          className="signup__conf"
           id="confirmPassword"
           type="password"
+          placeholder="Confirm password *"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           required
         />
       </label>
+      <p className="signup__message">Fields marked with * are required</p>
       {!matchPasswords && <p>Passwords do not match</p>}
-      <button id="submit" type="submit">Sign Up</button>
+      <button className="btn btn-accent signup__btn" id="submit" type="submit">Sign Up</button>
       {error && <Error setError={setError} errorMessage={errorMessage} />}
-      <a href="/login">Already have an account?</a>
+      <a className="link" href="/login">Already have an account?</a>
     </form>
   );
 };
