@@ -51,7 +51,6 @@ const AddTask = (props: {
 
     handleAddTask(newTask);
     setTitle('');
-    // setType('other');
     setDeadline('');
     setCarbs('');
     setFat('');

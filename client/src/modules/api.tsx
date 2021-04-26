@@ -1,11 +1,6 @@
-const baseUrl = 'http://localhost:8000/';
+require('dotenv').config();
 
-// interface User {
-//   firstName: string;
-//   lastName: string;
-//   email: string;
-//   password: string;
-// }
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 const createNewUser = (user: User) => fetch(`${baseUrl}api/users`, {
   method: 'POST',
